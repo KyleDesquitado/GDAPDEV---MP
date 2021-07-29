@@ -4,8 +4,9 @@ using UnityEngine;
 
 public class HandheldCameraBehavior : MonoBehaviour
 {
-    [SerializeField] GameObject target;
+    [SerializeField] List<GameObject> targets;
     Camera cam;
+    private bool canSeeTarget;
     // Start is called before the first frame update
 
     public static class RendererExtensions
@@ -20,7 +21,7 @@ public class HandheldCameraBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        bool canSeeTarget = checkIfVisible(target.GetComponent<Renderer>(), cam);
+        canSeeTarget = false;
         if(canSeeTarget)
         {
             Debug.Log("can see target");
@@ -34,4 +35,28 @@ public class HandheldCameraBehavior : MonoBehaviour
         return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
     }
 
+    public GameObject getVisibleTarget()
+    {
+        for(int i = 0; i < targets.Count; i++)
+        {
+            canSeeTarget = checkIfVisible(targets[i].GetComponent<Renderer>(), cam);
+            if (canSeeTarget)
+            {
+                return targets[i];
+            }
+        }
+        
+
+        return null;
+    }
+
+    public void addTarget(GameObject newTarget)
+    {
+        targets.Add(newTarget);
+    }
+
+    public void removeTarget(GameObject destroyedTarget)
+    {
+        targets.Remove(destroyedTarget);
+    }
 }

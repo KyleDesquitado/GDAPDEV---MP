@@ -6,7 +6,9 @@ public class GameManager : MonoBehaviour
 {
     [SerializeField] HandheldCameraBehavior camera;
     [SerializeField] PlayerController player;
+    [SerializeField] EnemySpawner spawner;
     GameObject target;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -21,6 +23,7 @@ public class GameManager : MonoBehaviour
             target = camera.getVisibleTarget();
             if(target != null)
             {
+                spawner.respawnEnemy(target);
                 target.SetActive(false);
                 camera.removeTarget(target);
             }

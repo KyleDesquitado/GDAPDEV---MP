@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EnemySpawner : MonoBehaviour
 {
-    [SerializeField] List<GameObject> enemySpawnList;
-    [SerializeField] GameObject enemyObj;
+    [SerializeField] List<GameObject> enemySpawnLocList;
+    [SerializeField] GameObject enemyTemplate;
     [SerializeField] GameObject player;
-    [SerializeField] HandheldCameraBehavior targetHolder;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -19,31 +19,34 @@ public class EnemySpawner : MonoBehaviour
         //    enemySpawnList.RemoveAt(0);
         //}
 
-        for(int i = 0; i < enemySpawnList.Count; i++)
+        for(int i = 0; i < enemySpawnLocList.Count; i++)
         {
-            GameObject enemySpawn = GameObject.Instantiate(enemyObj, enemySpawnList[i].transform.position, Quaternion.identity, null);
+            GameObject enemySpawn = GameObject.Instantiate(enemyTemplate, enemySpawnLocList[i].transform.position, Quaternion.identity, null);
             enemySpawn.transform.LookAt(player.transform);
+            enemySpawn.GetComponent<EnemyStats>().intializeEnemyStats();
             enemySpawn.GetComponent<EnemyBehavior>().setTarget(player);
-            targetHolder.addTarget(enemySpawn);
+          //  targetList.addTarget(enemySpawn);
+
+            GameManager.Instance.addToEnemyList(enemySpawn);
         }
     }
 
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
-    public List<GameObject> getSpawnList()
+    public List<GameObject> getSpawnLocList()
     {
-        return enemySpawnList;
+        return enemySpawnLocList;
     }
     
     public void respawnEnemy(GameObject deadEnemy)
     {
-        for(int i = 0; i < enemySpawnList.Count; i++)
+        for(int i = 0; i < enemySpawnLocList.Count; i++)
         {
-            if(deadEnemy.transform.position == enemySpawnList[i].transform.position)
+            if(deadEnemy.transform.position == enemySpawnLocList[i].transform.position)
             {
                 float delayTime = Random.Range(7f, 15f);
                 StartCoroutine(reviveDelay(delayTime, i));
@@ -55,9 +58,9 @@ public class EnemySpawner : MonoBehaviour
     private IEnumerator reviveDelay(float waitTime, int index)
     {
         yield return new WaitForSeconds(waitTime);
-        GameObject enemySpawn = GameObject.Instantiate(enemyObj, enemySpawnList[index].transform.position, Quaternion.identity, null);
+        GameObject enemySpawn = GameObject.Instantiate(enemyTemplate, enemySpawnLocList[index].transform.position, Quaternion.identity, null);
         enemySpawn.transform.LookAt(player.transform);
         enemySpawn.GetComponent<EnemyBehavior>().setTarget(player);
-        targetHolder.addTarget(enemySpawn);
+        GameManager.Instance.addToEnemyList(enemySpawn);
     }
 }

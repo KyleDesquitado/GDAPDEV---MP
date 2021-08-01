@@ -9,6 +9,8 @@ public class EnemyBehavior : MonoBehaviour
     private GameObject target;
     private Vector3 directionToTarget;
     private float moveSpeed = 50;
+
+  
     // Start is called before the first frame update
     void Start()
     {
@@ -18,19 +20,19 @@ public class EnemyBehavior : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (timer < idleTime)
-        {
-            timer += Time.deltaTime;
-        }
+        //if (timer < idleTime)
+        //{
+        //    timer += Time.deltaTime;
+        //}
 
-        else if(target != null)
-        {
-            if (Vector3.Distance(gameObject.transform.position, target.transform.position) > 1)
-                gameObject.transform.position += directionToTarget * Time.deltaTime * moveSpeed;
+        //else if(target != null)
+        //{
+        //    if (Vector3.Distance(gameObject.transform.position, target.transform.position) > 1)
+        //        gameObject.transform.position += directionToTarget * Time.deltaTime * moveSpeed;
 
-            else GameObject.Destroy(this.gameObject);
+        //    else GameObject.Destroy(this.gameObject);
 
-        }
+        //}
     }
 
     public void setTarget(GameObject target)

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class HandheldCameraBehavior : MonoBehaviour
 {
-    [SerializeField] List<GameObject> targets;
+    List<GameObject> enemyList;
     Camera cam;
     private bool canSeeTarget;
     // Start is called before the first frame update
@@ -28,6 +28,7 @@ public class HandheldCameraBehavior : MonoBehaviour
         }
     }
 
+    // returns true if renderer is detected in camera
     private bool checkIfVisible(Renderer renderer, Camera camera)
     {
 
@@ -35,28 +36,20 @@ public class HandheldCameraBehavior : MonoBehaviour
         return GeometryUtility.TestPlanesAABB(planes, renderer.bounds);
     }
 
+    //returns visible target
     public GameObject getVisibleTarget()
     {
-        for(int i = 0; i < targets.Count; i++)
+        enemyList = GameManager.Instance.enemyList;
+
+        for(int i = 0; i < enemyList.Count; i++)
         {
-            canSeeTarget = checkIfVisible(targets[i].GetComponent<Renderer>(), cam);
+            // checks if each target if visible in cam
+            canSeeTarget = checkIfVisible(enemyList[i].GetComponent<Renderer>(), cam);
             if (canSeeTarget)
             {
-                return targets[i];
+                return enemyList[i];
             }
         }
-        
-
         return null;
-    }
-
-    public void addTarget(GameObject newTarget)
-    {
-        targets.Add(newTarget);
-    }
-
-    public void removeTarget(GameObject destroyedTarget)
-    {
-        targets.Remove(destroyedTarget);
     }
 }

@@ -20,11 +20,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Color newColor = Color.white;
     [SerializeField] private float flashOpacity = 1;
 
-<<<<<<< HEAD
     private bool isFlash = false;
-
-=======
->>>>>>> 367ccf04908e82554828656095835284aa401281
     void Start()
     {
         // id = -1 means the finger is not being tracked
@@ -38,10 +34,8 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-<<<<<<< HEAD
         isFlash = false;
-=======
->>>>>>> 367ccf04908e82554828656095835284aa401281
+
         // Handles input
         GetTouchInput();
 
@@ -58,10 +52,7 @@ public class PlayerController : MonoBehaviour
             Debug.Log("Moving");
             //Move();
         }
-<<<<<<< HEAD
-=======
 
->>>>>>> 367ccf04908e82554828656095835284aa401281
     }
 
     void GetTouchInput()
@@ -82,10 +73,8 @@ public class PlayerController : MonoBehaviour
                         leftFingerID = t.fingerId;
                         Debug.Log("tracking Left finger");
                         flashImage.StartFlash(0.25f, flashOpacity, newColor);
-<<<<<<< HEAD
                         isFlash = true;
-=======
->>>>>>> 367ccf04908e82554828656095835284aa401281
+
 
                     }
                     else if (t.position.x > halfScreenWidth && rightFingerID == -1)
@@ -142,12 +131,8 @@ public class PlayerController : MonoBehaviour
         // horizontal (yaw) rotation
         transform.Rotate(transform.up, lookInput.x);
     }
-<<<<<<< HEAD
-
     public bool getCameraFlashBool()
     {
         return isFlash;
     }
-=======
->>>>>>> 367ccf04908e82554828656095835284aa401281
 }
